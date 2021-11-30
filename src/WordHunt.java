@@ -44,7 +44,7 @@ public class WordHunt {
         String[] sorted = solution.toArray(new String[0]);
         Arrays.sort(sorted, (a, b) -> Integer.compare(b.length(), a.length()));
         for (int i = 0; i < sorted.length; i++) {
-            //System.out.println(sorted[i]);
+            System.out.println(sorted[i]);
         }
         System.out.println(count);
     }
@@ -63,7 +63,7 @@ public class WordHunt {
 
         if (validWord(word)) {
             if (!solution.contains(word)) {
-                System.out.println(word);
+                //System.out.println(word);
                 solution.add(word);
                 count++;
             }
@@ -92,9 +92,10 @@ public class WordHunt {
     }
 
     public static boolean validWord (String word) throws IOException {
+        char let = word.charAt(0);
         if (word.length() < 3)
             return false;
-        File dict = new File("dictionary.txt");
+        File dict = new File("dictionary_" + let + ".txt");
         BufferedReader br = new BufferedReader(new FileReader(dict));
         String line;
         while ((line = br.readLine()) != null) {
@@ -104,7 +105,8 @@ public class WordHunt {
         return false;
     }
     public static boolean validWordFrag (String word) throws IOException {
-        File dict = new File("dictionary.txt");
+        char let = word.charAt(0);
+        File dict = new File("dictionary_" + let + ".txt");
         BufferedReader br = new BufferedReader(new FileReader(dict));
         String line;
         while ((line = br.readLine()) != null) {
