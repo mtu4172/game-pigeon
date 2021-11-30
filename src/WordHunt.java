@@ -10,7 +10,6 @@ public class WordHunt {
         String letters;
         boolean[][] traversed = new boolean[4][4];
 
-        // reads input until valid string of 16 letters is found
         input: while (true) {
             System.out.println("Input letters left to right, top to bottom: ");
             letters = in.next().toUpperCase();
@@ -27,20 +26,18 @@ public class WordHunt {
             break;
         }
 
-        // copies string to board
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 board[i][j] = letters.charAt(i*4+j);
-                //System.out.print(board[i][j]);
                 traversed[i][j] = false;
             }
-            //System.out.println();
         }
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 traverse(i, j, traversed, "");
             }
         }
+
         String[] sorted = solution.toArray(new String[0]);
         Arrays.sort(sorted, (a, b) -> Integer.compare(b.length(), a.length()));
         for (int i = 0; i < sorted.length; i++) {
@@ -63,7 +60,6 @@ public class WordHunt {
 
         if (validWord(word)) {
             if (!solution.contains(word)) {
-                //System.out.println(word);
                 solution.add(word);
                 count++;
             }
@@ -115,16 +111,4 @@ public class WordHunt {
         }
         return false;
     }
-
-    /*public static boolean validWord (String word) throws Exception {
-        if (word.length() < 3)
-            return false;
-        URL url = new URL("https://dictionary.com/browse/" + word);
-        try {
-            Scanner in = new Scanner(url.openStream());
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
-    }*/
 }
