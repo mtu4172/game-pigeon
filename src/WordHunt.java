@@ -39,9 +39,10 @@ public class WordHunt {
 
         String[] sorted = solution.toArray(new String[0]);
         Arrays.sort(sorted, (a, b) -> Integer.compare(b.length(), a.length()));
+        System.out.println("Number of words: " + count);
+        System.out.println("Total possible score: " + Scorer.scoreWH(sorted));
         for (String s : sorted)
             System.out.println(s);
-        System.out.println("Number of words: " + count);
     }
 
     public static void traverse (int x, int y, boolean[][] traversed, String word) throws Exception {

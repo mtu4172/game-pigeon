@@ -33,9 +33,10 @@ public class Anagram {
         }
         String[] sorted = solution.toArray(new String[0]);
         Arrays.sort(sorted, (a, b) -> Integer.compare(b.length(), a.length()));
+        System.out.println("Number of words: " + count);
+        System.out.println("Total possible score: " + Scorer.scoreAN(sorted));
         for (String s : sorted)
             System.out.println(s);
-        System.out.println("Number of words: " + count);
     }
     public static void easyTraverse (int x, boolean[] traversed, String word) throws IOException {
         boolean[] updTraversed = new boolean[6];
