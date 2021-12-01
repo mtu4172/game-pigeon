@@ -43,7 +43,7 @@ public class WordHunt {
         for (int i = 0; i < sorted.length; i++) {
             System.out.println(sorted[i]);
         }
-        System.out.println(count);
+        System.out.println("Number of words: " + count);
     }
 
     public static void traverse (int x, int y, boolean[][] traversed, String word) throws Exception {
