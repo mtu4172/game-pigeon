@@ -58,13 +58,13 @@ public class WordHunt {
         word += board[x][y];
         updTraversed[x][y] = true;
 
-        if (validWord(word)) {
+        if (WordChecker.validWord(word)) {
             if (!solution.contains(word)) {
                 solution.add(word);
                 count++;
             }
         }
-        if (!validWordFrag(word))
+        if (!WordChecker.validWordFrag(word))
             return;
 
         if (y > 0) {
@@ -85,30 +85,5 @@ public class WordHunt {
         }
         if (x > 0)
             traverse(x-1,y, updTraversed, word);
-    }
-
-    public static boolean validWord (String word) throws IOException {
-        char let = word.charAt(0);
-        if (word.length() < 3)
-            return false;
-        File dict = new File("dictionary_" + let + ".txt");
-        BufferedReader br = new BufferedReader(new FileReader(dict));
-        String line;
-        while ((line = br.readLine()) != null) {
-            if (line.equals(word))
-                return true;
-        }
-        return false;
-    }
-    public static boolean validWordFrag (String word) throws IOException {
-        char let = word.charAt(0);
-        File dict = new File("dictionary_" + let + ".txt");
-        BufferedReader br = new BufferedReader(new FileReader(dict));
-        String line;
-        while ((line = br.readLine()) != null) {
-            if (line.startsWith(word))
-                return true;
-        }
-        return false;
     }
 }
