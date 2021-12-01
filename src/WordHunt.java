@@ -1,4 +1,3 @@
-import java.io.*;
 import java.util.*;
 
 public class WordHunt {
@@ -40,19 +39,15 @@ public class WordHunt {
 
         String[] sorted = solution.toArray(new String[0]);
         Arrays.sort(sorted, (a, b) -> Integer.compare(b.length(), a.length()));
-        for (int i = 0; i < sorted.length; i++) {
-            System.out.println(sorted[i]);
-        }
+        for (String s : sorted)
+            System.out.println(s);
         System.out.println("Number of words: " + count);
     }
 
     public static void traverse (int x, int y, boolean[][] traversed, String word) throws Exception {
         boolean[][] updTraversed = new boolean[4][4];
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                updTraversed[i][j] = traversed[i][j];
-            }
-        }
+        for (int i = 0; i < 4; i++)
+            System.arraycopy(traversed[i], 0, updTraversed[i], 0, 4);
         if (updTraversed[x][y])
             return;
         word += board[x][y];
