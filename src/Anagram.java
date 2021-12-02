@@ -7,7 +7,7 @@ public class Anagram {
     public static void main(String[] args) throws IOException {
         Scanner in = new Scanner(System.in);
         String letters;
-        boolean[] traversed = new boolean[6];
+        boolean[] visited = new boolean[6];
 
         input: while (true) {
             System.out.println("Input letters: ");
@@ -26,10 +26,10 @@ public class Anagram {
         }
         for (int i = 0; i < 6; i++) {
             pool[i] = letters.charAt(i);
-            traversed[i] = false;
+            visited[i] = false;
         }
         for (int i = 0; i < 6; i++) {
-            easyTraverse(i, traversed, "");
+            easyTraverse(i, visited, "");
         }
         String[] sorted = solution.toArray(new String[0]);
         Arrays.sort(sorted, (a, b) -> Integer.compare(b.length(), a.length()));
@@ -38,11 +38,11 @@ public class Anagram {
         for (String s : sorted)
             System.out.println(s);
     }
-    public static void easyTraverse (int x, boolean[] traversed, String word) throws IOException {
-        boolean[] updTraversed = new boolean[6];
-        System.arraycopy(traversed, 0, updTraversed, 0, 6);
+    public static void easyTraverse (int x, boolean[] visited, String word) throws IOException {
+        boolean[] visitedTemp = new boolean[6];
+        System.arraycopy(visited, 0, visitedTemp, 0, 6);
         word += pool[x];
-        updTraversed[x] = true;
+        visitedTemp[x] = true;
         if (WordChecker.validWord(word)) {
             if (!solution.contains(word)) {
                 solution.add(word);
@@ -53,8 +53,8 @@ public class Anagram {
             return;
 
         for (int i = 0; i < 6; i++) {
-            if (!updTraversed[i]) {
-                easyTraverse(i, updTraversed, word);
+            if (!visitedTemp[i]) {
+                easyTraverse(i, visitedTemp, word);
             }
         }
     }

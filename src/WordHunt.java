@@ -7,7 +7,7 @@ public class WordHunt {
     public static void main(String[] args) throws Exception {
         Scanner in = new Scanner(System.in);
         String letters;
-        boolean[][] traversed = new boolean[4][4];
+        boolean[][] visited = new boolean[4][4];
 
         input: while (true) {
             System.out.println("Input letters left to right, top to bottom: ");
@@ -28,12 +28,12 @@ public class WordHunt {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 board[i][j] = letters.charAt(i*4+j);
-                traversed[i][j] = false;
+                visited[i][j] = false;
             }
         }
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                traverse(i, j, traversed, "");
+                traverse(i, j, visited, "");
             }
         }
 
@@ -45,14 +45,14 @@ public class WordHunt {
             System.out.println(s);
     }
 
-    public static void traverse (int x, int y, boolean[][] traversed, String word) throws Exception {
-        boolean[][] updTraversed = new boolean[4][4];
+    public static void traverse (int x, int y, boolean[][] visited, String word) throws Exception {
+        boolean[][] visitedTemp = new boolean[4][4];
         for (int i = 0; i < 4; i++)
-            System.arraycopy(traversed[i], 0, updTraversed[i], 0, 4);
-        if (updTraversed[x][y])
+            System.arraycopy(visited[i], 0, visitedTemp[i], 0, 4);
+        if (visitedTemp[x][y])
             return;
         word += board[x][y];
-        updTraversed[x][y] = true;
+        visitedTemp[x][y] = true;
 
         if (WordChecker.validWord(word)) {
             if (!solution.contains(word)) {
@@ -65,21 +65,21 @@ public class WordHunt {
 
         if (y > 0) {
             if (x > 0)
-                traverse(x-1,y-1, updTraversed, word);
-            traverse(x,y-1, updTraversed, word);
+                traverse(x-1,y-1, visitedTemp, word);
+            traverse(x,y-1, visitedTemp, word);
             if (x < 3)
-                traverse(x+1,y-1, updTraversed, word);
+                traverse(x+1,y-1, visitedTemp, word);
         }
         if (x < 3)
-            traverse(x+1,y, updTraversed, word);
+            traverse(x+1,y, visitedTemp, word);
         if (y < 3) {
             if (x < 3)
-                traverse(x+1,y+1, updTraversed, word);
-            traverse(x,y+1, updTraversed, word);
+                traverse(x+1,y+1, visitedTemp, word);
+            traverse(x,y+1, visitedTemp, word);
             if (x > 0)
-                traverse(x-1,y+1, updTraversed, word);
+                traverse(x-1,y+1, visitedTemp, word);
         }
         if (x > 0)
-            traverse(x-1,y, updTraversed, word);
+            traverse(x-1,y, visitedTemp, word);
     }
 }
