@@ -4,7 +4,7 @@ public class Anagram {
     public static char[] pool = new char[6];
     public static List<String> solution = new ArrayList<>();
     public static int count = 0;
-    public static void main(String[] args) throws IOException {
+    public static void AN() throws IOException {
         Scanner in = new Scanner(System.in);
         String letters;
         boolean[] visited = new boolean[6];

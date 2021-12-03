@@ -4,7 +4,7 @@ public class WordHunt {
     public static char[][] board = new char[4][4];
     public static List<String> solution = new ArrayList<>();
     public static int count = 0;
-    public static void main(String[] args) throws Exception {
+    public static void WH() throws Exception {
         Scanner in = new Scanner(System.in);
         String letters;
         boolean[][] visited = new boolean[4][4];
@@ -24,7 +24,7 @@ public class WordHunt {
             }
             break;
         }
-
+        System.out.println("Loading...");
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 board[i][j] = letters.charAt(i*4+j);
@@ -38,7 +38,7 @@ public class WordHunt {
         }
 
         String[] sorted = solution.toArray(new String[0]);
-        Arrays.sort(sorted, (a, b) -> Integer.compare(b.length(), a.length()));
+        Arrays.sort(sorted, Comparator.comparingInt(String::length));
         System.out.println("Number of words: " + count);
         System.out.println("Total possible score: " + Scorer.scoreWH(sorted));
         for (String s : sorted)
