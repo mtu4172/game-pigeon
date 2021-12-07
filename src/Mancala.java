@@ -18,13 +18,23 @@ public class Mancala {
             if (_turn) {
                 System.out.println("Player 1 to move: ");
                 print();
-                if (!move(1, RtI(1, in.nextInt())))
-                    _turn = !_turn;
+                try {
+                    if (!move(1, RtI(1, localMax())))
+                        _turn = !_turn;
+                } catch (StackOverflowError e) {
+                    System.out.println("Error: that space is empty.\n" +
+                            "Try again.\n");
+                }
             } else {
                 System.out.println("Player 2 to move: ");
                 print();
-                if (!move(2, RtI(2, in.nextInt())))
-                    _turn = !_turn;
+                try {
+                    if (!move(2, RtI(2, in.nextInt())))
+                        _turn = !_turn;
+                } catch (StackOverflowError e) {
+                    System.out.println("Error: that space is empty.\n" +
+                            "Try again.\n");
+                }
             }
         }
     }
@@ -39,6 +49,8 @@ public class Mancala {
     public static boolean move (int turn, int ind) {
         int[] linear = linearize(turn);
         if (turn == 1) {
+            if (linear[ind] == 0)
+                throw new StackOverflowError();
             int temp = linear[ind];
             linear[ind] = 0;
             for (int i = ind+1; i < ind+1 + temp; i++)
@@ -51,6 +63,8 @@ public class Mancala {
             if (linear[temp] != 1)
                 return move(1, temp);
         } else if (turn == 2) {
+            if (linear[ind] == 0)
+                throw new StackOverflowError();
             int temp = linear[ind];
             linear[ind] = 0;
             for (int i = ind+1; i < ind+1 + temp; i++)
@@ -110,5 +124,42 @@ public class Mancala {
                 break;
         }
         return folded;
+    }
+
+    public static int localMax () {
+        int[][] origState = new int[2][6];
+        boolean[] resets = new boolean[6];
+        int[] scores = new int[6];
+        int origScore = p1Score, moveScore = 0, bestMove = -1;
+        for (int i = 0; i < 6; i++) {
+            origState[0][i] = board[0][i];
+            origState[1][i] = board[1][i];
+        }
+        for (int i = 0; i < 6; i++) {
+            if (board[0][-i+5] == 0) {
+                continue;
+            }
+            resets[i] = move(1, RtI(1, i+1));
+            scores[i] = p1Score;
+            p1Score = origScore;
+            for (int j = 0; j < 6; j++) {
+                board[0][j] = origState[0][j];
+                board[1][j] = origState[1][j];
+            }
+        }
+        for (int i = 0; i < 6; i++) {
+            if (scores[i] > moveScore) {
+                bestMove = i;
+                moveScore = scores[i];
+                continue;
+            }
+            if (scores[i] == moveScore && resets[i]) {
+                bestMove = i;
+            }
+        }
+        System.out.println("Player 1 best move: " + (bestMove+1));
+        if (resets[bestMove])
+            System.out.println("THIS IS A RESET MOVE\n");
+        return bestMove+1;
     }
 }
